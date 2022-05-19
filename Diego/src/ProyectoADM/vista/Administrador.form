@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="9dfeb" binding="Administrador" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="9dfeb" binding="panelSuperior" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="North"/>
         <properties/>
         <border type="none" title=""/>
@@ -15,12 +15,13 @@
           <component id="886b8" class="javax.swing.JTextField" binding="administradorTextField" default-binding="true">
             <constraints/>
             <properties>
+              <editable value="false"/>
               <text value="Administrador"/>
             </properties>
           </component>
         </children>
       </grid>
-      <grid id="6df1f" binding="panelLateral" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="6df1f" binding="panelInferior" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="East"/>
         <properties/>
@@ -60,7 +61,7 @@
           </component>
         </children>
       </grid>
-      <scrollpane id="8e240" binding="JScrollPane">
+      <scrollpane id="8e240" binding="scrollPane1" custom-create="true">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
