@@ -1,6 +1,6 @@
-package controlador;
+package controlador.Administrador;
 
-import ProyectoADM.vista.Administrador;
+import vista.Administrador.Administrador;
 import modelo.dao.usuario.UsuarioDAO;
 import javax.swing.*;
 

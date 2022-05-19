@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UsuarioDAOImpl implements UsuarioDAO {
+public class UsuarioDAOImpl implements UsuarioDAO{
     private Connection conexion = ConexionSQLite.getConexionSQLite().getConexion();
     @Override
     public Usuario crearUsuario(Usuario usuario) throws SQLException {
-        //INSERT INTO usuarios (nombre, apellidos, telefono, dni, email, password )
-        // VALUES ('juan', 'garcía garcía', '953272522', '01234567a', 'email@correo.es', 'djfdjfljdkf');
+        //llamamos al método existeEmailOdni, si existe no se inserta el usuario, si no si se inserta
+        if (existeEmailOdni(usuario.getDni(), usuario.getEmail()))
+            return null;
         String sql = "INSERT INTO usuarios (nombre, apellidos, telefono, dni, email, password ) VALUES (?, ?, ?, ?, ?, ?);";
         PreparedStatement sentencia = conexion.prepareStatement(sql);
         sentencia.setString(1, usuario.getNombre());
@@ -31,22 +32,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             return usuario;
         return null;
     }
-
-    public boolean existeEmailOdni (String dni, String email){
-        //SELECT * FROM usuarios where dni = '12345678a' OR email = 'email@correo'
-        String sql = "SELECT * FROM usuarios where dni = ? OR email = ?;";
+    private boolean existeEmailOdni (String dni, String email) {
+        String sql = "SELECT * FROM usuarios WHERE dni = ? OR email = ?;";
         int contador = 0;
-        try (PreparedStatement sentencia = conexion.prepareStatement(sql)){
-            sentencia.setString(1,dni);
-            sentencia.setString(2,email);
+        try (PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+            sentencia.setString(1, dni);
+            sentencia.setString(2, email);
             ResultSet resultado = sentencia.executeQuery();
             while (resultado.next())
                 contador++;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
-        return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return contador != 0;
     }
     @Override
     public boolean eliminarUsuarioPorDNI(String dni) throws SQLException {
@@ -60,7 +59,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public boolean actulizarUsuarioPorDNI(String dni, Usuario newUsuario) throws SQLException {
+    public boolean actualizarUsuarioPorDNI(String dni, Usuario newUsuario) throws SQLException {
         if (existeEmailOdni(newUsuario.getDni(), newUsuario.getEmail()))
             return false;
         String sql = "UPDATE usuarios SET nombre = ?, apellidos = ?, telefono = ?, dni = ?, email = ?, rol = ?, password = ? WHERE dni = ?;";
@@ -77,43 +76,29 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public Usuario buscarUsuario(String dni) throws SQLException {
-        return null;
-    }
-
-
-    @Override
-    public boolean eliminarUsuario(String dni) {
-        return false;
-    }
-
-    @Override
-    public boolean actualizarUsuario(String dni, Usuario newUsuario) throws SQLException {
-        return false;
-    }
-
-
-    @Override
-    public boolean actualizarUsuarioPorDNI(String dni, Usuario newUsuario) throws SQLException {
-        String sql = "UPDATE usuarios SET nombre = ?, apellidos = ?, telefono = ?, dni = ?, email = ?, rol = ?, password = ? WHERE dni = ?;";
-        PreparedStatement sentencia = conexion.prepareStatement(sql);
-        sentencia.setString(1, newUsuario.getNombre()); sentencia.setString(2, newUsuario.getApellidos());
-        sentencia.setString(3, newUsuario.getTelefono()); sentencia.setString(4, newUsuario.getDni());
-        sentencia.setString(5, newUsuario.getEmail()); sentencia.setInt(6, newUsuario.getRol());
-        sentencia.setString(7, newUsuario.getPassword());
-        sentencia.setString(8, dni);
-        int resultado = sentencia.executeUpdate();
-        if (sentencia != null)
-            sentencia.close();
-        return resultado != 0;
-    }
-
-    @Override
-    public Usuario buscarUsuarioPorDni(String dni) throws SQLException {
-        Usuario usuario = null;
-        String sql = " select * FROM usuarios WHERE dni = ?;";
+    public int buscarIDUsuarioPorDni(String dni) throws SQLException {
+        int id = -1;
+        String sql = " select id FROM usuarios WHERE dni = ?;";
         PreparedStatement sentencia = conexion.prepareStatement(sql);
         sentencia.setString(1,dni);
+        ResultSet resultado = sentencia.executeQuery();
+        while (resultado.next()) { //id|nombre|apellidos|telefono|dni|email|rol|password
+            id = resultado.getInt(1);
+        }
+        if (resultado != null)
+            resultado.close();
+        if (sentencia != null)
+            sentencia.close();
+        return id;
+    }
+
+    @Override
+    public Usuario buscarUsuarioPorId(int id) throws SQLException {
+        Usuario usuario = null;
+        //  System.out.println(id);
+        String sql = " select * FROM usuarios WHERE id = ?;";
+        PreparedStatement sentencia = conexion.prepareStatement(sql);
+        sentencia.setInt(1,id);
         ResultSet resultado = sentencia.executeQuery();
         while (resultado.next()) { //id|nombre|apellidos|telefono|dni|email|rol|password
             usuario = new Usuario(resultado.getString("nombre"), resultado.getString("apellidos"),
@@ -148,25 +133,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public Usuario loguearUsuario(String email, String password) throws SQLException {
-        Usuario usuario = null;
-        String sql = " SELECT * FROM usuarios WHERE email = ? AND password = ? ;";
-        PreparedStatement sentencia = conexion.prepareStatement(sql);
-        sentencia.setString(1, email);
-        sentencia.setString(2, password);
-        ResultSet resultado = sentencia.executeQuery();
-        while (resultado.next())
-            usuario = new Usuario(resultado.getString("nombre"), resultado.getString("apellidos"),
-                    resultado.getString("telefono"), resultado.getString("dni"),
-                    resultado.getString("email"), resultado.getString("password"));
-        if (resultado != null)
-            resultado.close();
-        if (sentencia != null)
-            sentencia.close();
-        return usuario;
-    }
-
-    @Override
     public Usuario loguearUsuarios(String email, String password) throws SQLException {
         Usuario usuario = null;
         String sql = " SELECT * FROM usuarios WHERE email = ? AND password = ? ;";
@@ -187,18 +153,19 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public boolean mandarDatosAFichero(String path) {
-        //crear printwriter y escribir los datos de la BD
-        String ruta = "FICHEROS" + path;
+        String ruta = "FICHEROS/" + path;
         File inFile = new File(ruta);
-        try (PrintWriter out = new PrintWriter(inFile)){
-    List<Usuario> lista = obtenerTodosUsuarios();
-            for (Usuario usuario:lista) {
+        try (PrintWriter out = new PrintWriter(inFile)) {
+            List<Usuario> lista = obtenerTodosUsuarios();
+            for (Usuario usuario: lista) {
+                // System.out.println(usuario);
                 out.println(usuario);
+                out.flush();
             }
-        }catch (FileNotFoundException | SQLException e ){
+        } catch (FileNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return inFile.length() !=0;
+        return inFile.length() != 0;
     }
 
     @Override
@@ -222,15 +189,5 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         //introducimos datos a la BD
         System.out.printf("Insertados %d usuarios en la BD%n", contador);
         return contador != 0;
-    }
-
-    @Override
-    public int buscarIDUsuarioPorDni(String dniUsuario) {
-        return 0;
-    }
-
-    @Override
-    public Usuario buscarUsuarioPorId(int idUsuario) {
-        return null;
     }
 }

@@ -1,4 +1,4 @@
-package ProyectoADM.vista;
+package vista.Administrador;
 
 import javax.swing.*;
 import java.awt.*;
