@@ -24,9 +24,9 @@ public class ControladorAdministrador {
            };
 
     private void salirAplicacion(){
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir?",
+        int o = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir?",
                 "SALIR", JOptionPane.YES_NO_OPTION);
-        if (opcion == 0)
+        if (o == 0)
             System.exit(0);
     }
 }
