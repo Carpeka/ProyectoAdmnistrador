@@ -15,6 +15,7 @@
           <component id="886b8" class="javax.swing.JTextField" binding="administradorTextField" default-binding="true">
             <constraints/>
             <properties>
+              <editable value="false"/>
               <text value="Administrador"/>
             </properties>
           </component>

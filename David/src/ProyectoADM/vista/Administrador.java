@@ -13,5 +13,4 @@ public class Administrador {
     private JButton salirButton;
     private JTable Tabla;
     private JScrollPane JScrollPane;
-
 }
