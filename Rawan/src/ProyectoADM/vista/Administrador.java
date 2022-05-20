@@ -1,6 +1,8 @@
 package ProyectoADM.vista;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Administrador {
     private JPanel panelPrincipal;
@@ -14,4 +16,14 @@ public class Administrador {
     private JTable Tabla;
     private JScrollPane JScrollPane;
 
+    public Administrador() {
+        buscarUsuarioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+
+
+            }
+        });
+    }
 }
