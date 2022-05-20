@@ -1,6 +1,5 @@
 package modelo.conexion;
 
-import modelo.singleton.Unico;
 import org.sqlite.SQLiteConfig;
 
 import java.io.FileNotFoundException;
@@ -12,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConexionSQLite {
+
     private static ConexionSQLite conexionSQLite;
     private static Connection conexion;
     private ConexionSQLite() {
@@ -36,11 +36,9 @@ public class ConexionSQLite {
             conexionSQLite = new ConexionSQLite();
         return conexionSQLite;
     }
-
     public Connection getConexion() {
         return conexion;
     }
-
     public void cerrarConexion () {
         if (conexion != null) {
             try {

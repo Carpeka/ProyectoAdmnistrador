@@ -7,17 +7,20 @@ public class Reserva {
     private LocalDate fecha;
     private int duracion;
     private int horaEntrada;
-    private TipoReserva tipoReserva = TipoReserva.GUIADA;
-    private String dniUsuario; //lo puedo obtener del usuario logueado
+    private TipoReserva tipo = TipoReserva.GUIADA;
+    private int id_usuario;
+
+    public Reserva(LocalDate fecha, int duracion, int horaEntrada, int id_usuario) {
+        this.fecha = fecha;
+        this.duracion = duracion;
+        this.horaEntrada = horaEntrada;
+        this.id_usuario = id_usuario;
+    }
 
     public Reserva() {
     }
 
-    public Reserva(LocalDate fecha, int duracion, int horaEntrada, String dniUsuario) {
-        this.fecha = fecha;
-        this.duracion = duracion;
-        this.horaEntrada = horaEntrada;
-        this.dniUsuario = dniUsuario;
+    public Reserva(LocalDate now, int duracion, int horaEntrada, String s) {
     }
 
     public LocalDate getFecha() {
@@ -44,44 +47,36 @@ public class Reserva {
         this.horaEntrada = horaEntrada;
     }
 
-    public TipoReserva getTipoReserva() {
-        return tipoReserva;
+    public TipoReserva getTipo() {
+        return tipo;
     }
 
-    public void setTipoReserva(TipoReserva tipoReserva) {
-        this.tipoReserva = tipoReserva;
+    public void setTipo(TipoReserva tipo) {
+        this.tipo = tipo;
     }
 
-    public String getDniUsuario() {
-        return dniUsuario;
+    public int getId_usuario() {
+        return id_usuario;
     }
 
-/* public void setIdUsario(int idUsario) {
-        this.idUsario = idUsario;
+    /*public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }*/
 
     @Override
     public String toString() {
-        return String.format("%s,%d,%d,%s,%s",
-                fecha, duracion, horaEntrada, tipoReserva, dniUsuario);
+        return String.format("%s,%d,%d,%s,%d",fecha,duracion,horaEntrada,tipo,id_usuario);
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Reserva reserva = (Reserva) o;
-
-        if (horaEntrada != reserva.horaEntrada) return false;
-        return fecha != null ? fecha.equals(reserva.fecha) : reserva.fecha == null;
+    public Object getTipoReserva() {
+        return null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = fecha != null ? fecha.hashCode() : 0;
-        result = 31 * result + horaEntrada;
-        return result;
+    public String getDniUsuario() {
+        return null;
+    }
+
+    public void setTipoReserva(TipoReserva tipoReserva) {
     }
 }

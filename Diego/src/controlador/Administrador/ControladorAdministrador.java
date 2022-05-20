@@ -1,7 +1,8 @@
 package controlador.Administrador;
 
-import vista.Administrador.Administrador;
 import modelo.dao.usuario.UsuarioDAO;
+import vista.Administrador.Administrador;
+
 import javax.swing.*;
 
 public class ControladorAdministrador {
@@ -12,26 +13,23 @@ public class ControladorAdministrador {
         this.vista = vista;
         this.modelo = modelo;
     }
-
-    public void initController() {
-        vista.getSalirButton().addActionListener(actionEvent -> salirAplicacion());
-    }
-
     private static final String[] nombreColumnas =
-                    {"Nombre",
-                    "Apellidos",
-                    "Teléfono",
-                    "DNI",
-                    "Email",
-                    "Password"};
+            {"Nombre",
+            "Apellidos",
+            "Teléfono",
+            "DNI",
+            "Email",
+            "Password"};
 
     private static final Object[][] insertarDatos = {
-    };
+           };
 
     private void salirAplicacion(){
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir?",
+        int o = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir?",
                 "SALIR", JOptionPane.YES_NO_OPTION);
-        if (opcion == 0)
+        if (o == 0)
             System.exit(0);
     }
 }
+
+
