@@ -8,27 +8,16 @@ public interface UsuarioDAO {
     boolean eliminarUsuarioPorDNI(String dni) throws SQLException;
     boolean actulizarUsuarioPorDNI(String dni, Usuario newUsuario)throws SQLException;
     Usuario buscarUsuario(String dni)throws  SQLException;
-
     boolean eliminarUsuario(String dni);
-
     boolean actualizarUsuario(String dni, Usuario newUsuario) throws SQLException;
-
     boolean actualizarUsuarioPorDNI(String dni, Usuario newUsuario) throws SQLException;
-
     Usuario buscarUsuarioPorDni(String dni) throws SQLException;
-
     List<Usuario> obtenerTodosUsuarios() throws SQLException;
-
     Usuario loguearUsuario (String email, String password) throws SQLException;
-
     Usuario loguearUsuarios(String email, String password) throws SQLException;
-
     boolean mandarDatosAFichero(String path);
-
     boolean guardarDatosBD(String path);
-
     int buscarIDUsuarioPorDni(String dniUsuario);
-
     Usuario buscarUsuarioPorId(int idUsuario);
 
 /* Semana santa
