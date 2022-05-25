@@ -3,12 +3,10 @@ package controlador.Administrador;
 import modelo.dao.usuario.Usuario;
 import modelo.dao.usuario.UsuarioDAO;
 import modelo.dao.usuario.UsuarioDAOImpl;
-import vista.Administrador.Administrador;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class ModeloTablaUsuario extends AbstractTableModel {
@@ -19,17 +17,40 @@ public class ModeloTablaUsuario extends AbstractTableModel {
             "Teléfono",
             "DNI",
             "Email",
+            "Rol",
             "Password"};
 
-    private static final Object[][] insertarDatos = null;
+    private static final Object[][] data = null;
 
     public ModeloTablaUsuario() {
         try {
             List<Usuario> listaUsuario = dao.obtenerTodosUsuarios();
             System.out.println(listaUsuario);
             for (int i = 0; i < listaUsuario.size(); i++){
-                for(int j = 0; j < 6; j++){
-                    //
+                for(int j = 0; j < nombreColumnas.length; j++){
+                    switch (j){
+                        case 0:
+                            data[i][0] = listaUsuario.get(i).getNombre();
+                            break;
+                        case 1:
+                            data[i][1] = listaUsuario.get(i).getApellidos();
+                            break;
+                        case 2:
+                            data[i][2] = listaUsuario.get(i).getTelefono();
+                            break;
+                        case 3:
+                            data[i][3] = listaUsuario.get(i).getDni();
+                            break;
+                        case 4:
+                            data[i][4] = listaUsuario.get(i).getEmail();
+                            break;
+                        case 5:
+                            data[i][5] = listaUsuario.get(i).getRol();
+                            break;
+                        default:
+                            data[i][6] = listaUsuario.get(i).getPassword();
+                            break;
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -49,17 +70,17 @@ public class ModeloTablaUsuario extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return insertarDatos.length;
+        return data.length;
     }
 
     @Override
     public int getColumnCount() {
-        return insertarDatos[6].length;
+        return data[6].length;
     }
 
     @Override
     public Object getValueAt(int row, int column) {
-        return insertarDatos[row][column];
+        return data[row][column];
     }
 }
 
