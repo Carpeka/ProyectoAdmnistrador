@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Login {
     private JFrame ventanaLogin;
-    private JPanel panelPrincipal;
+    private JPanel panelPrincipalLogin;
     private JPanel panelSuperior;
     private JLabel labelTitulo;
     private JPanel panelInferior;
@@ -19,12 +19,12 @@ public class Login {
 
     public Login () {
         ventanaLogin = new JFrame("Aplicación reservas");
-        ventanaLogin.setContentPane(panelPrincipal);
+        ventanaLogin.setContentPane(panelPrincipalLogin);
         ventanaLogin.setSize(300,300);
         ventanaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaLogin.setLocationRelativeTo(null);
-        // ventanaLogin.pack();
-        //  ventanaLogin.setVisible(true);
+         ventanaLogin.pack();
+          ventanaLogin.setVisible(true);
     }
 
     public JFrame getVentanaLogin() {

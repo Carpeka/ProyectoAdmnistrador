@@ -16,6 +16,8 @@
             <constraints/>
             <properties>
               <editable value="false"/>
+              <font size="18" style="2"/>
+              <horizontalAlignment value="0"/>
               <text value="Administrador"/>
             </properties>
           </component>
@@ -51,7 +53,7 @@
               <text value="Modificar Usuario"/>
             </properties>
           </component>
-          <component id="6aa28" class="javax.swing.JButton" binding="salirButton" default-binding="true">
+          <component id="6aa28" class="javax.swing.JButton" binding="botonSalir" default-binding="true">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

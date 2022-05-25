@@ -13,7 +13,7 @@ public class Administrador {
     private JButton crearUsuarioButton;
     private JButton buscarUsuarioButton;
     private JButton modificarUsuarioButton;
-    private JButton salirButton;
+    private JButton botonSalir;
     private JTable Tabla;
     private JScrollPane scrollPane1;
 
@@ -51,21 +51,20 @@ public class Administrador {
         crearUsuarioButton.setFont(fuenteBotones);
         modificarUsuarioButton.setFont(fuenteBotones);
         buscarUsuarioButton.setFont(fuenteBotones);
-        salirButton.setFont(fuenteBotones);
+        botonSalir.setFont(fuenteBotones);
         crearUsuarioButton = new JButton("Crear");
         panel.add(crearUsuarioButton);
         buscarUsuarioButton = new JButton("Buscar");
         panel.add(buscarUsuarioButton);
         modificarUsuarioButton = new JButton("Modificar");
         panel.add(modificarUsuarioButton);
-        salirButton = new JButton("Salir");
-        panel.add(salirButton);
+        botonSalir = new JButton("Salir");
+        panel.add(botonSalir);
+        panel.setVisible(true);
         return panel;
     }
     private static JPanel crearPanelSuperior() {
         JPanel panel = new JPanel();
-
-
         return panel;
     }
 
@@ -89,7 +88,7 @@ public class Administrador {
         return modificarUsuarioButton;
     }
 
-    public JButton getSalirButton() {
-        return salirButton;
+    public JButton getBotonSalir() {
+        return botonSalir;
     }
 }
