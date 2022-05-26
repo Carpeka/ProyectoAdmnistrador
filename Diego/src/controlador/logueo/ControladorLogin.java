@@ -1,13 +1,14 @@
 package controlador.logueo;
 
+import controlador.Administrador.ControladorAdministrador;
 import controlador.Reservas.ControladorReservas;
 import modelo.dao.usuario.Usuario;
 import modelo.dao.usuario.UsuarioDAO;
+import vista.Administrador.Administrador;
 import vista.logueo.Login;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 public class ControladorLogin {
     private UsuarioDAO modelo;
@@ -35,19 +36,23 @@ public class ControladorLogin {
         String sPassword = new String(cPassword);
         try {
             Usuario usuario = modelo.loguearUsuarios(email, sPassword.trim());
+           // Administrador administrador = modelo.loguearUsuarios(email,sPassword.trim());
+
+
             if (usuario == null)
                 vista.getLabelError().setText("Ese usuario no existe");
                 //System.out.println(usuario);
             else {
-                vista.getVentanaLogin().setVisible(false);
-                new ControladorReservas(usuario).inicializarControlador();
+                if (usuario.getRol()==0){
+                    vista.getVentanaLogin().setVisible(false);
+                    new ControladorReservas(usuario).inicializarControlador();
+                } else {
+                    vista.getVentanaLogin().setVisible(false);
+                    //new ControladorAdministrador().inicializarControlador();
+                }
+
             }
-            //crear una ventana con una etiqueta y esa etiqueta
-            //son los datos del usuario
-            //crear una vista en reservas
-            //crear el controlador, exactamente igual que el de login
-            //ventana login que no se vea
-            //arrancar el controlador de reservas que pinte la interface de reservas
+
         } catch (SQLException e) {
             JOptionPane.showInternalMessageDialog(null, "Error en la apliación",
                     "ERROR", JOptionPane.ERROR_MESSAGE);

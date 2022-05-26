@@ -1,3 +1,4 @@
+import controlador.Administrador.ControladorAdministrador;
 import controlador.logueo.ControladorLogin;
 import modelo.dao.usuario.UsuarioDAO;
 import modelo.dao.usuario.UsuarioDAOImpl;
@@ -9,9 +10,9 @@ public class App {
             public void run() {
                 UsuarioDAOImpl modelo = new UsuarioDAOImpl();
                 Login vista = new Login();
-                ControladorLogin controlador  =
-                        new ControladorLogin(modelo, vista);
+                ControladorLogin controlador  = new ControladorLogin(modelo, vista);
                 controlador.inicializarControlador();
+
             }
         });
     }

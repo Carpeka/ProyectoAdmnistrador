@@ -2,16 +2,22 @@ package controlador.Administrador;
 
 import modelo.dao.reserva.Reserva;
 import modelo.dao.reserva.ReservaDAO;
+import modelo.dao.usuario.UsuarioDAO;
+import modelo.dao.usuario.UsuarioDAOImpl;
+import vista.Administrador.Administrador;
 import vista.logueo.Login;
 
 import javax.swing.*;
 
 public class ControladorAdministrador {
-    private ReservaDAO modelo;
+    private Administrador modelo;
     private Login vista;
-    public ControladorAdministrador(ReservaDAO modelo, Login vista) {
+    private Administrador administrador;
+
+    public ControladorAdministrador(Administrador modelo, Login vista, Administrador administrador) {
         this.modelo = modelo;
         this.vista = vista;
+        this.administrador = administrador;
         inicializarVista();
     }
 

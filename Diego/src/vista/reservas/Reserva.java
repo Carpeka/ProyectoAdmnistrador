@@ -17,7 +17,7 @@ public class Reserva {
         ventanaReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaReservas.setLocationRelativeTo(null);
         // ventanaLogin.pack();
-        //ventanaReservas.setVisible(true);
+        ventanaReservas.setVisible(true);
     }
 
     public JFrame getVentanaReservas() {
